@@ -1,0 +1,33 @@
+#!/bin/bash
+#pyt="/Users/petyr/Sites/SQL_TMP/"
+pyt="./"
+user="root"
+pass="Alfa123#"
+
+
+clear
+echo Въведете база-данни:
+read dbname
+echo Въведете изходяща директория: "[по подразбиране = $pyt]":
+read dirname
+
+if [ -z $dirname ]
+then
+dirname=$pyt
+fi
+
+if [ -z $dbname ]
+then
+dbname=`mysql -u$user -p$pass -e "SHOW DATABASES;" | tr -d "| " | grep -v Database`
+fi
+
+new_path=$dirname
+for db in $dbname; do
+    if [[ "$db" != "information_schema" ]] && [[ "$db" != "performance_schema" ]] && [[ "$db" != "mysql" ]] && [[ "$db" != "sys" ]] && [[ "$db" != _* ]] ; then
+        filename=$db-$(date +'%Y-%m-%d')
+        echo "Dumping database: $db"
+        mysqldump -u$user -p$pass --databases --add-drop-database --opt -R $db > $new_path/$filename.sql
+        cd $new_path/
+        zip $filename.sql.zip $filename.sql
+    fi
+done

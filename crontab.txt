@@ -1,0 +1,5 @@
+0 23 * * * /home/prsystem/backup_databases.sh
+
+# 30 23 * * * rm -rf /home/prsystem/google-drive/backup && cp -r /home/prsystem/backup /home/prsystem/google-drive/.
+
+* * * * * cd /home/prsystem/html/prsystem && /usr/bin/php artisan schedule:run >> /dev/null 2>&1

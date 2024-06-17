@@ -1,0 +1,20 @@
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	prsystem.bg. root.localhost. (
+			      4		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+
+; name servers - NS records
+      IN      NS      ns1.prsystem.bg.
+
+
+; PTR Records
+111   IN      PTR     prsystem.bg.    ; 192.168.1.111
+111   IN      PTR     ns1.prsystem.bg.    ; 192.168.1.111
+111   IN      PTR     server.prsystem.bg.    ; 192.168.1.111
